@@ -1,0 +1,486 @@
+:root {
+    --primary-color: #2756b3; /* Verde neón brillante para acentos y elementos interactivos */
+    --primary-dark: rgba(63, 161, 241, 0.158)/* Versión más oscura del neón azul*/
+    --secondary-color: #888888; /* Gris oscuro para textos secundarios, complementa los fondos oscuros */
+    --accent-color: #0082e6; /* Otro tono de verde para éxito o información positiva, ligeramente diferente al neón */
+
+    --background-dark: #1a1a1a; /* Negro muy oscuro para el fondo general */
+    --background-card: #222222; /* Gris oscuro para tarjetas y secciones, ligeramente más claro que el fondo */
+    --background-header-footer: #0a0a0a; /* Negro absoluto para cabecera y pie de página, muy oscuro */
+
+    --text-color-dark: #cccccc; /* Gris claro para el texto principal sobre fondos oscuros */
+    --text-color-light: #ffffff; /* Blanco puro para contraste máximo cuando sea necesario (títulos en hero) */
+
+    --heading-font: 'Montserrat', sans-serif; /* Mantenemos una fuente moderna y profesional */
+    --body-font: 'Open Sans', sans-serif; /* Mantenemos una fuente legible */
+    --border-radius-default: 4px; /* Bordes más afilados para un look tecnológico */
+    --box-shadow-light: 0 4px 15px rgba(89, 145, 206, 0.533); /* Sombra con toque neón */
+    --transition-speed: 0.3s ease;
+}
+
+/* Base global */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {font-family: var(--body-font);
+    background-color: var(--background-dark); /* Fondo oscuro principal */
+    color: var(--text-color-dark); /* Color de texto predeterminado claro */
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: var(--primary-color); /* Enlaces con el color de acento verde neón */
+    transition: color var(--transition-speed);
+}
+
+a:hover {
+    color: var(--primary-dark);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--heading-font);
+    color: var(--text-color-light); /* Títulos en blanco para un contraste fuerte */
+    margin-bottom: 1rem;
+}
+
+h1 { font-size: clamp(2.5rem, 5vw, 4rem); }
+h2 { font-size: clamp(2rem, 4vw, 3rem); }
+h3 { font-size: clamp(1.5rem, 3vw, 2rem); }
+
+p {
+    margin-bottom: 1rem;
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.section-padding {
+    padding: 5rem 0;
+}
+
+/* Header & Navbar */
+.main-header {
+    background-color: var(--background-header-footer); /* Cabecera muy oscura */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.7); /* Sombra más oscura */
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.main-header.scrolled {
+    background-color: rgba(10, 10, 10, 0.95); /* Semi-transparente al scroll */
+    box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-color); /* Logo en verde neón */
+    text-shadow: 0 0 5px var(--primary-color); /* Efecto neón en el logo */
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 2.5rem;
+}
+
+.nav-links a {
+    color: var(--text-color-dark); /* Enlaces de navegación claros */
+    font-weight: 600;
+    padding: 0.5rem 0;
+    position: relative;
+    transition: color var(--transition-speed), text-shadow var(--transition-speed);
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    background-color: var(--primary-color);
+    bottom: -5px;
+    left: 0;
+    transition: width var(--transition-speed), box-shadow var(--transition-speed);
+    box-shadow: 0 0 8px var(--primary-color); /* Efecto neón en la línea de hover */
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+    width: 100%;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--primary-color);
+    text-shadow: 0 0 5px var(--primary-color); /* Efecto neón en el texto del enlace */
+}
+
+/* Mobile Menu Toggle */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    position: relative;
+    z-index: 1001;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: var(--primary-color); /* Líneas del menú en verde neón */
+    margin: 5px auto;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 0 5px var(--primary-color); /* Efecto neón */
+}
+
+.menu-toggle.active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* Matrix Background Animation */
+#matrix-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Detrás de todo el contenido */
+    background-color: var(--background-dark); /* Fondo oscuro base para la matriz */
+    pointer-events: none; /* No interfiere con clics */
+}
+
+/* Hero Section (index.html) */
+/* Hero Section (index.html) */
+.hero-section {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: var(--text-color-light);
+    /* ** AQUI SE AÑADE LA IMAGEN DE FONDO ** */
+    background: url('huella digital.jpg') no-repeat center center/cover; /* Usar la imagen con su nombre actual */
+    overflow: hidden;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Overlay más oscuro para que la matriz y la imagen de fondo no saturen */
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+    padding: 0 1.5rem;
+}
+
+.hero-content h1 {
+    color: var(--text-color-light);
+    margin-bottom: 1.5rem;
+    font-size: clamp(3rem, 6vw, 4.8rem);
+    text-shadow: 0 0 10px var(--primary-color); /* Efecto neón en el título principal */
+}
+
+.hero-content p {
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
+    margin-bottom: 2.5rem;
+    opacity: 0.9;
+}
+
+/* Small Hero Sections (other pages) */
+.section-hero-small {
+    background: linear-gradient(to right, rgba(21, 107, 199, 0.533), rgba(21, 107, 199, 0.533)); /* Degradado de neón verde */
+    color: var(--text-color-light);
+    padding: 6rem 0 4rem;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(21, 107, 199, 0.533);
+}
+
+.section-hero-small h1 {
+    color: var(--text-color-light);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    margin-bottom: 1rem;
+    text-shadow: 0 0 8px var(--primary-color);
+}
+
+.section-hero-small p {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    opacity: 0.9;
+}
+
+/* Content Sections */
+.content-section {
+    background-color: var(--background-card); /* Fondo para las secciones de contenido */
+    border-radius: var(--border-radius-default);
+    box-shadow: var(--box-shadow-light);
+    margin: 3rem auto;
+    border: 1px solid rgba(21, 107, 199, 0.533); /* Borde sutil neón */
+}
+
+.section-subtitle {
+    text-align: center;
+    margin-top: 3rem;
+    margin-bottom: 2.5rem;
+    color: var(--primary-color); /* Subtítulos con el color de acento */
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    position: relative;
+    text-shadow: 0 0 5px var(--primary-color); /* Efecto neón en subtítulos */
+}
+
+.section-subtitle::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background-color: var(--primary-color);
+    margin: 10px auto 0;
+    box-shadow: 0 0 8px var(--primary-color);
+}
+
+.text-block {
+    max-width: 800px;
+    margin: 0 auto 3rem;
+    text-align: justify;
+    color: var(--text-color-dark); /* Asegura que el texto sea claro */
+}
+
+.text-block p {
+    margin-bottom: 1.2rem;
+}
+
+/* Image with Text Layout */
+.image-with-text {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 4rem;
+}
+
+.image-with-text .image-wrapper {
+    flex: 1 1 40%;
+    min-width: 300px;
+}
+
+.image-with-text .image-wrapper .img-fluid {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--border-radius-default);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.7); /* Sombra más fuerte */
+    border: 1px solid rgba(21, 107, 199, 0.533); /* Borde neón a las imágenes */
+}
+
+.image-with-text .text-content {
+    flex: 1 1 50%;
+    min-width: 300px;
+    color: var(--text-color-dark); /* Texto de contenido claro */
+}
+
+.image-with-text.reverse {
+    flex-direction: row-reverse;
+}
+
+.image-with-text .text-content h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    text-shadow: 0 0 3px var(--primary-color);
+}
+
+.image-with-text .text-content ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 1.5rem;
+}
+
+.image-with-text .text-content ul li {
+    margin-bottom: 0.8rem;
+    position: relative;
+    padding-left: 25px;
+}
+
+.image-with-text .text-content ul li::before {
+    content: '❯'; /* Estilo de viñeta más de "terminal" */
+    color: var(--primary-color);
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+    text-shadow: 0 0 3px var(--primary-color);
+}
+
+
+/* Call to Action (CTA) Block */
+.cta-block {
+    margin-top: 4rem;
+    background-color: var(--primary-color); /* Color de acento para CTA */
+    color: var(--text-color-light);
+    padding: 3rem 2rem;
+    border-radius: var(--border-radius-default);
+    text-align: center;
+    box-shadow: 0 0 20px rgba(21, 107, 199, 0.533); /* Sombra neón prominente */
+}
+
+.cta-block p {
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-color-light);
+    text-shadow: 0 0 5px var(--primary-dark);
+}
+
+/* Footer */
+.main-footer {
+    background-color: var(--background-header-footer); /* Pie de página muy oscuro */
+    color: var(--text-color-dark); /* Texto del pie de página claro */
+    padding: 2rem 1.5rem;
+    text-align: center;
+    font-size: 0.9rem;
+    margin-top: 5rem;
+    border-top: 1px solid rgba(21, 107, 199, 0.533); /* Borde superior neón */
+}
+
+.main-footer p {
+    margin-bottom: 0.5rem;
+    color: var(--text-color-dark);
+}
+
+.main-footer a {
+    color: var(--primary-color);
+    transition: color var(--transition-speed);
+}
+
+.main-footer a:hover {
+    color: var(--text-color-light);
+    text-shadow: 0 0 5px var(--primary-color);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .nav-links {
+        gap: 1.5rem;
+    }
+
+    .hero-content h1 {
+        font-size: clamp(2.5rem, 5vw, 4rem);
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 1rem;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 70%;
+        height: 100vh;
+        background-color: var(--background-header-footer); /* Menú móvil oscuro */
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: right 0.4s ease-in-out;
+        z-index: 999;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.8);
+    }
+
+    .nav-links.active {
+        right: 0;
+    }
+
+    .nav-links li {
+        margin: 1.5rem 0;
+    }
+
+    .nav-links a {
+        color: var(--text-color-light); /* Enlaces del menú móvil claros */
+        font-size: 1.4rem;
+    }
+
+    .nav-links a::after {
+        background-color: var(--accent-color);
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .image-with-text {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .image-with-text.reverse {
+        flex-direction: column;
+    }
+
+    .image-with-text .text-content ul {
+        text-align: left;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 1rem;
+    }
+
+    .hero-content h1 {
+        font-size: clamp(2rem, 8vw, 3rem);
+    }
+
+    .hero-content p {
+        font-size: clamp(1rem, 4vw, 1.2rem);
+    }
+
+    .section-padding {
+        padding: 3rem 0;
+    }
+
+    .section-hero-small {
+        padding: 4rem 0 2rem;
+    }
+}
